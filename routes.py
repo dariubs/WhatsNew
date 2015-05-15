@@ -4,14 +4,13 @@
 	WhatsNew
 """
 
-from flask import Flask, render_template, redirect, url_for, abort, session
+from flask import Flask, render_template, redirect, url_for, abort, session, request
 from forms import LoginForm, RegisterForm
-from flask import request
-
 
 app = Flask(__name__)
 
 app.secret_key = "guess me"
+
 
 # Home
 @app.route("/")
@@ -21,8 +20,14 @@ def home():
 	else :
 		return redirect(url_for('login'))
 
+# Pages
+@app.route("/page/<int:num>")
+def paginate(num):
+	return "page {}".format(num)
+
 # Register
 @app.route("/register", methods=['GET', 'POST'])
+@app.route("/signup", methods=['GET', 'POST'])
 def register():
 	form = RegisterForm()
 
@@ -34,6 +39,7 @@ def register():
 
 # Login
 @app.route("/login", methods=['GET', 'POST'])
+@app.route("/signin", methods=['GET', 'POST'])
 def login():
 	form = LoginForm()
 
@@ -46,6 +52,7 @@ def login():
 
 # Logout
 @app.route("/logout")
+@app.route("/signout")
 def logout() :
 	if 'username' in session :
 		session.pop('username', None)
@@ -61,8 +68,10 @@ def submit_new():
 
 # User Page
 @app.route("/user/<username>")
-def userpage(username):
-	return "Hello, %s" % username
+def userpage(username = "null"):
+	email = request.args.get("email"," ")
+	return "Hello, {} , < {} >".format(username,email)
+
 
 # 404
 @app.errorhandler(404)
@@ -71,5 +80,4 @@ def not_found() :
 
 
 if __name__ == '__main__':
-	app.debug = False
-	app.run()
+	app.run(debug=True,port=2048)
