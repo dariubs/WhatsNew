@@ -1,0 +1,31 @@
+<!-- Page title -->
+{% block title %}Title{% endblock %}
+
+<!-- Extra  stylesheets -->
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+<!-- Navigation menu list items. -->
+{% block nav %}
+	<ul>
+		<li>Nav</li>
+		<li>Menu</li>
+		<li>Bar</li>
+	</ul>
+{% endblock %}
+
+<!-- main section of page-->
+{% block body %}
+	<h1>Main</h1>
+{% endblock %}
+
+<!-- Footer section -->
+{% block footer %}
+		This is fooooooter.
+{% endblock %}
+
+<!-- Extra js files -->
+{% block scripts %}
+		<script src="add.js"></script>
+{% endblock %}

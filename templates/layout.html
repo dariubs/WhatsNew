@@ -2,16 +2,28 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>What's New</title>
+	<title>{% block title %}{% endblock %}</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	{% block stylesheets %}{% endblock %}
 </head>
 <body>
-	<ul>
-		<li><a href="{{ url_for("home") }}">Home</a></li>
-		<li><a href="{{ url_for("login") }}">Login</a></li>
-	</ul>
+	<nav>
+		{% block nav %}
+		{% endblock %}
+	</nav>
 
 	{% block body %}
+	
+	{% endblock %}
+
+	<footer>
+		{% block footer %}
+		Whats new?
+		{% endblock %}
+	</footer>
+
+	{% block scripts %}
+		
 	{% endblock %}
 </body>
 </html>
