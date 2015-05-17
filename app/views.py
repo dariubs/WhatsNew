@@ -1,17 +1,6 @@
-# -*- coding: utf-8 -*-
-
-"""
-	WhatsNew
-"""
-
-from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response
+from app import app
 from forms import LoginForm, RegisterForm
-
-from config import *
-
-app = Flask(__name__)
-app.secret_key = "guess me"
-
+from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response
 
 # Home
 @app.route("/")
@@ -78,7 +67,3 @@ def userpage(username = "null"):
 @app.errorhandler(404)
 def not_found() :
 	render_template("404.html"), 404
-
-
-if __name__ == '__main__':
-	app.run(HOST, PORT, DEBUG)
