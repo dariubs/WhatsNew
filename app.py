@@ -4,11 +4,12 @@
 	WhatsNew
 """
 
-from flask import Flask, render_template, redirect, url_for, abort, session, request
+from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response
 from forms import LoginForm, RegisterForm
 
-app = Flask(__name__)
+from config import *
 
+app = Flask(__name__)
 app.secret_key = "guess me"
 
 
@@ -67,7 +68,7 @@ def submit_new():
 
 
 # User Page
-@app.route("/user/<username>")
+@app.route("/@<username>")
 def userpage(username = "null"):
 	email = request.args.get("email"," ")
 	return "Hello, {} , < {} >".format(username,email)
@@ -80,4 +81,4 @@ def not_found() :
 
 
 if __name__ == '__main__':
-	app.run(debug=True,port=2048)
+	app.run(HOST, PORT, DEBUG)
