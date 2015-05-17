@@ -1,14 +1,36 @@
 from app import app
-from forms import LoginForm, RegisterForm
 from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response
+from app.forms import LoginForm, RegisterForm
 
 # Home
 @app.route("/")
 def home():
-	if 'username' in session :
-		return "Hello"
-	else :
-		return redirect(url_for('login'))
+	
+	links = [
+		{
+			"title" : "Google ",
+			"link" : "https://google.com",
+			"points" : 12,
+			"user" : "user1",
+			"created" : 24
+		},
+		{
+			"title" : "Facebook",
+			"link" : "https://fb.com",
+			"points" : 10,
+			"user" : "user2",
+			"created" : 29
+		},
+		{
+			"title" : "Twitter",
+			"link" : "https://twitter.com",
+			"points" : 9,
+			"user" : "user3",
+			"created" : 98
+		}
+	]
+
+	return render_template("home.html", links = links)
 
 # Pages
 @app.route("/page/<int:num>")

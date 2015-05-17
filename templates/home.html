@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+<!-- Page title -->
+{% block title %}Title{% endblock %}
+
+<!-- Links -->
+{% block body %}
+
+	{% for link in links %}
+	   <h3><a href="{{link.link}}">{{link.title}}</a> </h3>
+	   <h4>by {{link.user}} at {{link.created}} min ago</h4>
+	   <h4>{{link.point}}</h4>
+	{% endfor %}
+
+{% endblock %}
+
+{% block footer %}
+	foooooooooooooooooooooooooooooooter
+{% endblock %}
