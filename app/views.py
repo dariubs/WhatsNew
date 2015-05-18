@@ -1,5 +1,5 @@
 from app import app
-from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response
+from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response, flash
 from app.forms import LoginForm, RegisterForm
 
 # Home
@@ -60,6 +60,9 @@ def login():
 		if request.form["username"] == "admin" and request.form["password"] == "admin" :
 			session["username"] = request.form["username"]
 			return redirect(url_for('home'))
+		else :
+			flash("username & password are incorrect")
+			render_template("login.html", form=form)
 	return render_template("login.html", form=form)
 
 # Logout
@@ -72,10 +75,15 @@ def logout() :
 	else :
 		return redirect(url_for('login'))
 
+
 # Submit Posts
 @app.route("/submit/new")
 def submit_new():
-	return render_template("post.html")
+	if 'username' in session :
+		return render_template("post.html")
+	else  :
+		flash('Login requested')
+		return redirect(url_for('login'))
 
 
 # User Page
@@ -89,3 +97,4 @@ def userpage(username = "null"):
 @app.errorhandler(404)
 def not_found() :
 	render_template("404.html"), 404
+
