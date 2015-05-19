@@ -10,9 +10,9 @@ SECRET_KEY = 'you-will-never-guess'
 app.secret_key = "guess me"
 
 DB = {
-	"name" : "dbname",
-	"host" : "0.0.0.0",
-	"port" : 1234,
+	"name" : "name",
+	"host" : "localhost",
+	"port" : 3306,
 	"username" : "root",
 	"password" : "password"
 }

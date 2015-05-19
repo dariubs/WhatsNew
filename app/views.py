@@ -1,6 +1,21 @@
 from app import app
-from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response, flash
+from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response, flash,g
 from app.forms import LoginForm, RegisterForm
+from flask.ext.login import LoginManager
+from app.models import *
+
+
+@app.before_request
+def before_request():
+	"""Connect to the database"""
+	g.db = db
+	g.db.connect()
+
+@app.after_request
+def after_request(response):
+	g.db.close()
+	return response
+
 
 # Home
 @app.route("/")
