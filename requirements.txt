@@ -9,5 +9,6 @@ flask-babel
 guess_language
 flipflop
 coverage
-flask-bcript
+flask-bcrypt
 pymysql
+Flask-Gravatar

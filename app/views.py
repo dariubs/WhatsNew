@@ -105,7 +105,8 @@ def submit_new():
 @app.route("/@<username>")
 def userpage(username = "null"):
 	email = request.args.get("email"," ")
-	return "Hello, {} , < {} >".format(username,email)
+
+	return render_template("profile.html",email=email)
 
 
 # 404
