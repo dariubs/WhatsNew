@@ -1,7 +1,8 @@
 from app import app
 from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response, flash,g
 from app.forms import LoginForm, RegisterForm
-from flask.ext.login import LoginManager
+from flask.ext.wtf import Form
+
 from app.models import *
 
 
@@ -52,14 +53,25 @@ def home():
 def paginate(num):
 	return "page {}".format(num)
 
-# Register
+
+"""
+	User Registration
+"""
 @app.route("/register", methods=['GET', 'POST'])
-@app.route("/signup", methods=['GET', 'POST'])
 def register():
 	form = RegisterForm()
+	if request.method == 'POST' :
+		post_username = request.form["username"]
+		post_email = request.form["email"]
+		post_password = request.form["password"]
 
-	if request.method == 'POST':
-		return "Hi"
+		if(User.not_username(post_username) and User.not_email(post_email)) :
+			if(len(post_password) < 8):
+				flash("password must be longer than 8 characters")
+			else :
+				User.create_user(post_username, post_email, post_password)
+				return redirect(url_for('login'))
+				
 
 	return render_template("register.html", form=form)
 
@@ -105,7 +117,7 @@ def submit_new():
 @app.route("/@<username>")
 def userpage(username = "null"):
 	email = request.args.get("email"," ")
-
+	User.activate(1234)
 	return render_template("profile.html",email=email)
 
 
