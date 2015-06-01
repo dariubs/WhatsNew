@@ -18,6 +18,12 @@ def after_request(response):
 	return response
 
 
+def loggedin():
+	if 'username' in session :
+		return True
+	else:
+		return False
+
 # Home
 @app.route("/")
 def home():
@@ -59,6 +65,10 @@ def paginate(num):
 """
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+	if loggedin():
+		flash("You are logged in")
+		return redirect("/")
+
 	form = RegisterForm()
 	if request.method == 'POST' :
 		post_username = request.form["username"]
@@ -78,8 +88,12 @@ def register():
 
 # Login
 @app.route("/login", methods=['GET', 'POST'])
-@app.route("/signin", methods=['GET', 'POST'])
 def login():
+	if loggedin():
+		flash("You are logged in")
+		return redirect("/")
+
+
 	form = LoginForm()
 
 	if request.method == 'POST':
@@ -94,9 +108,9 @@ def login():
 
 # Logout
 @app.route("/logout")
-@app.route("/signout")
+# @app.route("/signout")
 def logout() :
-	if 'username' in session :
+	if loggedin() :
 		session.pop('username', None)
 		return redirect(url_for('home'))
 	else :
@@ -106,7 +120,7 @@ def logout() :
 # Submit Posts
 @app.route("/submit/new")
 def submit_new():
-	if 'username' in session :
+	if loggedin() :
 		return render_template("post.html")
 	else  :
 		flash('Login requested')
@@ -117,8 +131,11 @@ def submit_new():
 @app.route("/@<username>")
 def userpage(username = "null"):
 	email = request.args.get("email"," ")
-	User.activate(1234)
-	return render_template("profile.html",email=email)
+	user = User.user_info(username)
+	if user:
+		return render_template("profile.html", user=user)
+	else :
+		return render_template("404.html")
 
 
 # 404

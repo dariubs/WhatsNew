@@ -67,6 +67,14 @@ class User(BaseModel):
 		try:
 			user = 	self.get(self.username == username)
 			return user
+		except :
+			return False
+
+	@classmethod
+	def check_login(self, username, password):
+		try :
+			user = 	self.select().where(username = username).where(password = password)
+			return user
 		except IntegrityError :
 			return False
 

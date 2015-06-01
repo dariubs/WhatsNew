@@ -4,6 +4,8 @@ DEBUG = True
 HOST = "0.0.0.0"
 PORT = 2048
 
+LANGUAGE = "EN"
+
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 

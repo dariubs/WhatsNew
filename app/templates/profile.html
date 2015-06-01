@@ -1,4 +1,4 @@
 {% extends "layout.html" %}
 {% block body %}
-	<img src="{{ email | gravatar }}" alt="">
+	<img src="{{ user.email | gravatar }}" alt="">
 {% endblock %}

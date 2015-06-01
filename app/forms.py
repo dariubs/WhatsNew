@@ -16,3 +16,4 @@ class RegisterForm(Form):
 class LinkForm(Form):
 	title = StringField("title")
 	url = StringField("url")
+	submit = SubmitField("submit url")
