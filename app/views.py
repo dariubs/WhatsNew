@@ -1,5 +1,5 @@
 from app import app
-from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response, flash,g
+from flask import Flask, render_template, redirect, url_for, abort, session, request, make_response, flash,g, jsonify
 from app.forms import LoginForm, RegisterForm
 from flask.ext.wtf import Form
 
@@ -27,7 +27,6 @@ def loggedin():
 # Home
 @app.route("/")
 def home():
-	
 	links = [
 		{
 			"title" : "Google ",
@@ -142,4 +141,30 @@ def userpage(username = "null"):
 @app.errorhandler(404)
 def not_found() :
 	render_template("404.html"), 404
+
+
+### API ###
+
+@app.route('/api',methods=["GET","POST"])
+@app.route('/api/',methods=["GET","POST"])
+def api_home():
+	user = {
+		"username" : "dariubs",
+		"email" : "poshtehani@gmail.com",
+		"homepage" : "http://dariubs.github.io"
+	}
+	return jsonify({"user" : user})
+
+@app.route('/api/user/<username>')
+def api_get_uset(username):
+	user = User.user_info(username)
+
+	if user:
+		info = {
+			"username" : user.username,
+			"email" : user.email
+		}
+		return jsonify({"user": info })
+	else :
+		return "{}"
 
